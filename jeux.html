@@ -48,9 +48,26 @@
             margin-top: 20px;
             color: #606060; /* Couleur du texte principal sur YouTube */
         }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #606060; /* Couleur du bouton de retour */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #444; /* Couleur du bouton de retour au survol */
+        }
     </style>
 </head>
 <body>
+    <a href="index.html" class="back-button">Retour</a>
     <div id="container">
         <h1>Jeu de Devinette</h1>
         <p>Devinez un nombre entre 1 et 100 :</p>
