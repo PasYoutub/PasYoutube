@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Devinette</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Jeu de Devinette</h1>
+        <p>Devinez un nombre entre 1 et 100 :</p>
+        <input type="number" id="guess" min="1" max="100">
+        <button onclick="checkGuess()">Vérifier</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // Générer un nombre aléatoire entre 1 et 100
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        console.log(randomNumber); // Pour tester, affichez le nombre dans la console
+
+        function checkGuess() {
+            // Obtenir la valeur devinée par l'utilisateur
+            const userGuess = parseInt(document.getElementById("guess").value);
+
+            // Vérifier si la devinette est correcte, trop basse ou trop élevée
+            if (userGuess === randomNumber) {
+                document.getElementById("result").innerHTML = "Bravo! Vous avez deviné le bon nombre!";
+            } else if (userGuess < randomNumber) {
+                document.getElementById("result").innerHTML = "Le nombre est trop bas.";
+            } else {
+                document.getElementById("result").innerHTML = "Le nombre est trop élevé.";
+            }
+        }
+    </script>
+</body>
+</html>
