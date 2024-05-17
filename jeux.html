@@ -13,7 +13,7 @@
         }
         #container {
             text-align: center;
-            margin-top: 100px;
+            margin-top: 50px;
         }
         h1 {
             color: #606060; /* Couleur du titre sur YouTube */
@@ -48,32 +48,28 @@
             margin-top: 20px;
             color: #606060; /* Couleur du texte principal sur YouTube */
         }
-        .back-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #606060; /* Couleur du bouton de retour */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
+        #score {
+            float: right;
+            margin-right: 20px;
+            font-size: 20px;
+            color: #606060;
         }
-        .back-button:hover {
-            background-color: #444; /* Couleur du bouton de retour au survol */
+        canvas {
+            border: 1px solid black;
+            background-color: #ffffff;
         }
     </style>
 </head>
 <body>
     <a href="index.html" class="back-button">Retour</a>
     <div id="container">
-        <h1>Un jeu caché? OMMGG</h1>
+        <h1>Jeu de Devinette</h1>
         <p>Devinez un nombre entre 1 et 100 :</p>
         <input type="number" id="guess" min="1" max="100">
         <button onclick="checkGuess()">Vérifier</button>
         <p id="result"></p>
+        <span id="score">Score: 0</span>
+        <canvas id="gameCanvas" width="400" height="200"></canvas>
     </div>
 
     <script>
@@ -94,6 +90,52 @@
                 document.getElementById("result").innerHTML = "Le nombre est trop élevé.";
             }
         }
+
+        // Jeu de plateforme simple
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        let score = 0;
+
+        let x = canvas.width / 2;
+        let y = canvas.height - 30;
+        let dx = 2;
+        let dy = -2;
+
+        canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            if (Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2)) <= 10) {
+                score++;
+                document.getElementById("score").innerText = "Score: " + score;
+            }
+        });
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, Math.PI*2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+
+            if(x + dx > canvas.width || x + dx < 0) {
+                dx = -dx;
+            }
+            if(y + dy > canvas.height || y + dy < 0) {
+                dy = -dy;
+            }
+
+            x += dx;
+            y += dy;
+        }
+
+        setInterval(draw, 10);
     </script>
 </body>
 </html>
